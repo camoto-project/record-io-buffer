@@ -1,0 +1,26 @@
+{
+  "name": "record-io-buffer",
+  "version": "1.0.0",
+  "description": "Read/write data records into Buffer instances",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Malvineous/record-io-buffer.git"
+  },
+  "keywords": [
+    "buffer",
+    "io",
+    "uint32",
+    "uint16",
+    "uint8"
+  ],
+  "author": "Adam Nielsen <malvineous@shikadi.net>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Malvineous/record-io-buffer/issues"
+  },
+  "homepage": "https://github.com/Malvineous/record-io-buffer#readme"
+}
