@@ -1,5 +1,5 @@
 {
-  "name": "record-io-buffer",
+  "name": "@malvineous/record-io-buffer",
   "version": "1.0.0",
   "description": "Read/write data records into Buffer instances",
   "main": "index.js",
