@@ -1,10 +1,12 @@
 module.exports = class RecordBuffer
 {
 	constructor(p) {
-		if (p instanceof Buffer) {
-			this.buffer = p;
-		} else {
+		if (typeof p === "number") {
 			this.buffer = Buffer.alloc(p || 1048576);
+			this.length = 0;
+		} else {
+			this.buffer = p;
+			this.length = p.length;
 		}
 		this.pos = 0;
 	}
@@ -21,8 +23,9 @@ module.exports = class RecordBuffer
 			this.buffer = newBuf;
 		}
 	}
-	getBuffer() {
-		return this.buffer.slice(0, this.pos);
+
+	getBuffer(len) {
+		return this.buffer.slice(0, len || this.length);
 	}
 
 	getPos() {
@@ -42,6 +45,7 @@ module.exports = class RecordBuffer
 		this.ensureFreeSpace(buf.length);
 		buf.copy(this.buffer, this.pos);
 		this.pos += buf.length;
+		this.updateLength();
 	}
 
 	readRecord(rec) {
@@ -77,6 +81,11 @@ module.exports = class RecordBuffer
 		return this.buffer.slice(offset, offset + len);
 	}
 
+	/// Make the length the offset of the last bit of data we've written.
+	updateLength() {
+		this.length = Math.max(this.length, this.pos);
+	}
+
 	/// Write a value directly.
 	/**
 	 * @param RecordType type
@@ -93,6 +102,7 @@ module.exports = class RecordBuffer
 		this.ensureFreeSpace(type.len);
 		type.write(this, b);
 		this.pos += type.len;
+		this.updateLength();
 	}
 
 	writeRecord(rec, obj) {
@@ -101,5 +111,6 @@ module.exports = class RecordBuffer
 			rec[k].write(this, obj[k]);
 			this.pos += rec[k].len;
 		});
+		this.updateLength();
 	}
 };
