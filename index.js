@@ -1,5 +1,4 @@
 module.exports = {
-	BufferWalk: require('./buffer_walk.js'),
-	GrowableBuffer: require('./growable_buffer.js'),
-	RecordType: require('./record_type.js'),
+	RecordBuffer: require('./record-buffer.js'),
+	RecordType: require('./record-type.js'),
 };
