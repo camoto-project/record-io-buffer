@@ -23,6 +23,9 @@ module.exports = {
 					return full; // no null
 				},
 				write: (b, val) => {
+					if (val === undefined) {
+						throw new Error('Cannot write undefined value');
+					}
 					// The space we're writing into has already been zero-filled
 					// so we can just write one char shorter than the max and
 					// we'll always have a null-terminated string.
@@ -43,6 +46,9 @@ module.exports = {
 					return full; // no null
 				},
 				write: (b, val) => {
+					if (val === undefined) {
+						throw new Error('Cannot write undefined value');
+					}
 					// The space we're writing into has already been zero-filled
 					// so we can just write the max and if the string is shorter
 					// the existing zero bytes will null-terminate it early.
