@@ -99,7 +99,7 @@ module.exports = class RecordBuffer
 	 * @postconditions File pointer advanced by the size of the type written.
 	 */
 	write(type, b) {
-		this.ensureFreeSpace(type.len);
+		this.ensureFreeSpace(type.len || 1024);
 		type.write(this, b);
 		this.pos += type.len;
 		this.updateLength();
@@ -107,10 +107,11 @@ module.exports = class RecordBuffer
 
 	writeRecord(rec, obj) {
 		Object.keys(rec).forEach(k => {
-			this.ensureFreeSpace(rec[k].len || 1048576);
-			rec[k].write(this, obj[k]);
-			this.pos += rec[k].len;
+			try {
+				this.write(rec[k], obj[k]);
+			} catch (e) {
+				throw new Error(`Unable to write element '${k}': ${e.message}`);
+			}
 		});
-		this.updateLength();
 	}
 };
