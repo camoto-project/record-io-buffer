@@ -48,6 +48,21 @@ module.exports = class RecordBuffer
 		this.updateLength();
 	}
 
+	/// Read a value directly.
+	/**
+	 * @param RecordType type
+	 *   Data type to read, e.g. RecordType.int.u8.
+	 *
+	 * @return Value read.
+	 *
+	 * @postconditions File pointer advanced by the size of the type written.
+	 */
+	read(type) {
+		const v = type.read(this);
+		this.pos += type.len;
+		return v;
+	}
+
 	readRecord(rec) {
 		let out = {};
 		Object.keys(rec).forEach(k => {
@@ -56,8 +71,7 @@ module.exports = class RecordBuffer
 				console.error(msg);
 				throw msg;
 			}
-			out[k] = rec[k].read(this);
-			this.pos += rec[k].len;
+			out[k] = this.read(rec[k]);
 		});
 		return out;
 	}
