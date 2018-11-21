@@ -21,12 +21,13 @@ module.exports = class RecordBuffer
 {
 	constructor(p) {
 		if (typeof p === "number") {
-			this.buffer = Buffer.alloc(p || 1048576);
+			this.buffer = new ArrayBuffer(p || 1048576);
 			this.length = 0;
 		} else {
 			this.buffer = p;
 			this.length = p.length;
 		}
+		this.dataview = new DataView(this.buffer);
 		this.pos = 0;
 	}
 
@@ -36,15 +37,21 @@ module.exports = class RecordBuffer
 
 	ensureFreeSpace(amt) {
 		if (this.pos + amt > this.buffer.length) {
-			//console.log('Enlarging buffer from', this.buffer.length, 'to', this.buffer.length + amt + 1048576, 'to fit extra', this.pos, '+', amt);
-			let newBuf = Buffer.alloc(this.buffer.length + amt + 1048576);
-			this.buffer.copy(newBuf);
-			this.buffer = newBuf;
+			this.buffer = new ArrayBuffer(this.buffer, this.buffer.length + amt + 1048576);
+			this.dataview = new DataView(this.buffer);
 		}
 	}
 
-	getBuffer(len) {
-		return this.buffer.slice(0, len || this.length);
+	getArrayBuffer() {
+		return this.buffer;
+	}
+
+	getTypedArray(TArray, offset = 0, len) {
+		return new TArray(this.buffer, offset, len || this.length)
+	}
+
+	getView(offset = 0, len) {
+		return new DataView(this.buffer, offset, len || this.length);
 	}
 
 	getPos() {
@@ -62,7 +69,8 @@ module.exports = class RecordBuffer
 	 */
 	put(buf) {
 		this.ensureFreeSpace(buf.length);
-		buf.copy(this.buffer, this.pos);
+		let target = new Uint8Array(this.buffer, this.pos, buf.length);
+		target.set(buf);
 		this.pos += buf.length;
 		this.updateLength();
 	}
@@ -108,10 +116,6 @@ module.exports = class RecordBuffer
 		this.pos += offset;
 		this.pos = Math.max(this.pos, 0);
 		this.pos = Math.min(this.pos, this.buffer.length);
-	}
-
-	sliceBlock(offset, len) {
-		return this.buffer.slice(offset, offset + len);
 	}
 
 	/// Make the length the offset of the last bit of data we've written.
