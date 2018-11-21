@@ -19,13 +19,31 @@
 
 module.exports = class RecordBuffer
 {
+	/**
+	 * Create a new RecordBuffer.
+	 *
+	 * @param {Number} | {ArrayBuffer} | {TypedArray} p
+	 *   Data source.
+	 *   - {Number} preallocates that much space to write into.
+	 *   - {ArrayBuffer} accesses the buffer directly (no copying), so is fast.
+	 *   - {TypedArray} copies the array into a new ArrayBuffer, so incurs a
+	 *     cost during object construction.
+	 */
 	constructor(p) {
 		if (typeof p === "number") {
 			this.buffer = new ArrayBuffer(p || 1048576);
 			this.length = 0;
-		} else {
+		} else if (p instanceof ArrayBuffer) {
 			this.buffer = p;
-			this.length = p.byteLength || p.length;
+			this.length = p.byteLength;
+		} else if (p.buffer && (p.byteOffset !== undefined)) { // TypedArray
+			this.buffer = new ArrayBuffer(p.byteLength);
+			const src = new Uint8Array(p.buffer, p.byteOffset, p.byteLength);
+			let dv = new Uint8Array(this.buffer);
+			dv.set(src);
+			this.length = p.byteLength;
+		} else {
+			throw new Error('Unsupported type passed to RecordBuffer constructor');
 		}
 		this.dataview = new DataView(this.buffer);
 		this.pos = 0;

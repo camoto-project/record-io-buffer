@@ -23,6 +23,43 @@ const { RecordBuffer, RecordType } = require('../index.js');
 
 describe('Reads blocks of data correctly', function() {
 
+	describe('constructor()', function() {
+
+		it('Accepts Uint8Array', function() {
+			let ua = Uint8Array.from([
+				0x12, 0x34, 0xFF, 0x00, 0x80, 0x7F, 0x01,
+			]);
+			let u2 = new Uint8Array(ua.buffer, 2, 4);
+
+			let rb = new RecordBuffer(u2);
+
+			assert.equal(rb.length, 4);
+
+			let content = rb.getView(1, 2);
+			assert.equal(content.getUint8(0), 0x00);
+			assert.equal(content.getUint8(1), 0x80);
+			assert.throws(() => content.getUint8(2), RangeError);
+		});
+
+		it('Accepts ArrayBuffer', function() {
+			let ab = new ArrayBuffer(5);
+			let rb = new RecordBuffer(ab);
+
+			assert.equal(rb.length, 5);
+		});
+
+		it('Accepts a Number', function() {
+			let rb = new RecordBuffer(6);
+
+			// Buffer looks empty
+			assert.equal(rb.length, 0);
+
+			// But has space preallocated
+			assert.equal(rb.buffer.byteLength, 6);
+		});
+
+	});
+
 	describe('getView()', function() {
 
 		it('Retrieves the correct window onto the data', function() {
