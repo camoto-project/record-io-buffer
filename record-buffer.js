@@ -25,19 +25,22 @@ module.exports = class RecordBuffer
 			this.length = 0;
 		} else {
 			this.buffer = p;
-			this.length = p.length;
+			this.length = p.byteLength || p.length;
 		}
 		this.dataview = new DataView(this.buffer);
 		this.pos = 0;
 	}
 
 	distFromEnd() {
-		return this.buffer.length - this.pos;
+		return this.length - this.pos;
 	}
 
 	ensureFreeSpace(amt) {
-		if (this.pos + amt > this.buffer.length) {
-			this.buffer = new ArrayBuffer(this.buffer, this.buffer.length + amt + 1048576);
+		if (this.pos + amt > this.buffer.byteLength) {
+			let newBuffer = new ArrayBuffer(this.pos + amt + 1048576);
+			let newView = new Uint8Array(newBuffer);
+			newView.set(new Uint8Array(this.buffer));
+			this.buffer = newBuffer;
 			this.dataview = new DataView(this.buffer);
 		}
 	}
@@ -60,14 +63,20 @@ module.exports = class RecordBuffer
 
 	/// Put the given data into the file and advance the pointer.
 	/**
-	 * @param Buffer buf
-	 *   Source data to copy here.
+	 * @param {Object} buf
+	 *   Source data to copy here.  Can be a {Uint8Array}, a normal {Array} of
+	 *   numbers (0-255) or an {ArrayBuffer}.
 	 *
 	 * @return None.
 	 *
 	 * @postconditions The file pointer has been advanced by buf.length.
 	 */
 	put(buf) {
+		if (buf instanceof ArrayBuffer) {
+			// ArrayBuffer objects can't be written directly, so access them via a
+			// TypedArray instead.
+			buf = new Uint8Array(buf);
+		}
 		this.ensureFreeSpace(buf.length);
 		let target = new Uint8Array(this.buffer, this.pos, buf.length);
 		target.set(buf);
@@ -106,7 +115,7 @@ module.exports = class RecordBuffer
 	// negative will seek from EOF
 	seekAbs(offset) {
 		if (offset < 0) {
-			this.pos = this.buffer.length + offset;
+			this.pos = this.buffer.byteLength + offset;
 		} else {
 			this.pos = offset;
 		}
@@ -115,7 +124,7 @@ module.exports = class RecordBuffer
 	seekRel(offset) {
 		this.pos += offset;
 		this.pos = Math.max(this.pos, 0);
-		this.pos = Math.min(this.pos, this.buffer.length);
+		this.pos = Math.min(this.pos, this.buffer.byteLength);
 	}
 
 	/// Make the length the offset of the last bit of data we've written.
@@ -136,6 +145,10 @@ module.exports = class RecordBuffer
 	 * @postconditions File pointer advanced by the size of the type written.
 	 */
 	write(type, b) {
+		// If we don't know how much data is going to be written, make sure there's
+		// enough room for 1024 bytes.  This should be large enough to handle
+		// anything as it's unlikely that the largest fields - variable-length
+		// strings - will be longer than 256 characters.
 		this.ensureFreeSpace(type.len || 1024);
 		type.write(this, b);
 		this.pos += type.len;
