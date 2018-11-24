@@ -121,3 +121,11 @@ When writing, one byte will be written for each character in the string
 and a final terminating null will only be written if space allows.  If
 the string is the maximum length given (or longer), then it will be
 truncated but no final null byte will be written.
+
+##### padding(len, value)
+
+Unused bytes for padding and alignment.
+
+When reading, returns a Uint8Array with the data.
+
+When writing, fills the block with a single byte, by default 0x00.

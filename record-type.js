@@ -227,6 +227,25 @@ module.exports = {
 			}),
 		},
 	},
+
+	/**
+	 * Unused bytes for padding and alignment.
+	 *
+	 * When reading, returns a Uint8Array with the data.
+	 *
+	 * When writing, fills with a single byte, by default 0x00.
+	 */
+	padding: (len, val = 0x00) => ({
+		read: rb => rb.getU8(rb.pos, len),
+		write: rb => {
+			let pad = new Uint8Array(len);
+			pad.fill(val);
+			rb.put(pad);
+			rb.pos -= len;
+		},
+		len: len,
+	}),
+
 	int: {
 		u8: {
 			read: rb => rb.dataview.getUint8(rb.pos),
