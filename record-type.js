@@ -103,6 +103,22 @@ function writeString(s, dv, offset, len, nullTerm, pad = true) {
 
 module.exports = {
 	string: {
+		/**
+		 * Mostly for debugging, convert an array of bytes to a string.
+		 *
+		 * @param {Array} | {Uint8Array} a
+		 *   Array of bytes.
+		 *
+		 * @return Unicode {String} where each byte has been treated as an IBM437
+		 *   character code.
+		 */
+		fromArray: a => {
+			let s = '';
+			for (let i = 0; i < a.length; i++) {
+				s += String.fromCharCode(mapIBM437[a[i]]);
+			}
+			return s;
+		},
 		fixed: {
 			/**
 			 * Fixed-length string with no null termination.
