@@ -35,10 +35,10 @@ describe('Reads blocks of data correctly', function() {
 
 			assert.equal(rb.length, 4);
 
-			let content = rb.getView(1, 2);
-			assert.equal(content.getUint8(0), 0x00);
-			assert.equal(content.getUint8(1), 0x80);
-			assert.throws(() => content.getUint8(2), RangeError);
+			let content = rb.getU8(1, 2);
+			assert.equal(content[0], 0x00);
+			assert.equal(content[1], 0x80);
+			assert.equal(content.length, 2);
 		});
 
 		it('Accepts ArrayBuffer', function() {
@@ -60,32 +60,14 @@ describe('Reads blocks of data correctly', function() {
 
 	});
 
-	describe('getView()', function() {
+	describe('getU8()', function() {
 
 		it('Retrieves the correct window onto the data', function() {
 			let rb = new RecordBuffer(Uint8Array.from([
 				0x12, 0x34, 0xFF, 0x00, 0x80, 0x7F, 0x01,
 			]).buffer);
 
-			let content = rb.getView(2, 4);
-
-			assert.equal(content.getUint8(0), 0xFF);
-			assert.equal(content.getUint8(1), 0x00);
-			assert.equal(content.getUint8(2), 0x80);
-			assert.equal(content.getUint8(3), 0x7F);
-			assert.throws(() => content.getUint8(4), RangeError);
-		});
-
-	});
-
-	describe('getTypedArray()', function() {
-
-		it('Retrieves the correct window onto the data', function() {
-			let rb = new RecordBuffer(Uint8Array.from([
-				0x12, 0x34, 0xFF, 0x00, 0x80, 0x7F, 0x01,
-			]).buffer);
-
-			let content = rb.getTypedArray(Uint8Array, 2, 4);
+			let content = rb.getU8(2, 4);
 
 			assert.equal(content[0], 0xFF);
 			assert.equal(content[1], 0x00);

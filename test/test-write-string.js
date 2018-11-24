@@ -47,7 +47,7 @@ describe('Writes strings correctly', function() {
 				};
 				rb.writeRecord(recordType, data);
 
-				assert.deepEqual(rb.getTypedArray(Uint8Array), Uint8Array.from([
+				assert.deepEqual(rb.getU8(), Uint8Array.from([
 					0x41, 0x42, 0x20, 0x01, 0xFB, 0x00, 0x47, 0x48,
 				]));
 			});
@@ -66,7 +66,7 @@ describe('Writes strings correctly', function() {
 				};
 				rb.writeRecord(recordType, data);
 
-				assert.deepEqual(rb.getTypedArray(Uint8Array), Uint8Array.from([
+				assert.deepEqual(rb.getU8(), Uint8Array.from([
 					0x41, 0x42, 0x20, 0x01, 0x00, 0x00, 0x00, 0x48,
 				]));
 			});
@@ -90,7 +90,7 @@ describe('Writes strings correctly', function() {
 			};
 			rb.writeRecord(recordType, data);
 
-			assert.deepEqual(rb.getTypedArray(Uint8Array), Uint8Array.from([
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
 				0x41, 0x01, 0x00, 0x00, 0x45, 0x00, 0x00, 0x00,
 			]));
 		});
@@ -111,7 +111,7 @@ describe('Writes strings correctly', function() {
 			};
 			rb.writeRecord(recordType, data);
 
-			assert.deepEqual(rb.getTypedArray(Uint8Array), Uint8Array.from([
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
 				0x41, 0x01, 0x43, 0x00, 0x00, 0x46, 0x47, 0x00,
 			]));
 		});
@@ -130,7 +130,7 @@ describe('Writes strings correctly', function() {
 			};
 			rb.writeRecord(recordType, data);
 
-			assert.deepEqual(rb.getTypedArray(Uint8Array), Uint8Array.from([
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
 				0x41, 0x42, 0x20, 0x01, 0xFB, 0x00, 0x47, 0x00,
 			]));
 		});
@@ -153,7 +153,7 @@ describe('Writes strings correctly', function() {
 			};
 			rb.writeRecord(recordType, data);
 
-			assert.deepEqual(rb.getTypedArray(Uint8Array), Uint8Array.from([
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
 				0x41, 0x01, 0x00, 0x45, 0x00,
 			]));
 		});
@@ -174,7 +174,7 @@ describe('Writes strings correctly', function() {
 			};
 			rb.writeRecord(recordType, data);
 
-			assert.deepEqual(rb.getTypedArray(Uint8Array), Uint8Array.from([
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
 				0x41, 0x01, 0x43, 0x00, 0x00, 0x46, 0x47, 0x00,
 			]));
 		});
@@ -193,7 +193,7 @@ describe('Writes strings correctly', function() {
 			};
 			rb.writeRecord(recordType, data);
 
-			assert.deepEqual(rb.getTypedArray(Uint8Array), Uint8Array.from([
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
 				0x41, 0x42, 0x20, 0x01, 0xFB, 0x00, 0x47, 0x00,
 			]));
 		});
@@ -216,7 +216,7 @@ describe('Writes strings correctly', function() {
 			};
 			rb.writeRecord(recordType, data);
 
-			assert.deepEqual(rb.getTypedArray(Uint8Array), Uint8Array.from([
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
 				0x41, 0x01, 0x00, 0x45, 0x00,
 			]));
 		});
@@ -237,7 +237,7 @@ describe('Writes strings correctly', function() {
 			};
 			rb.writeRecord(recordType, data);
 
-			assert.deepEqual(rb.getTypedArray(Uint8Array), Uint8Array.from([
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
 				0x41, 0x01, 0x43, 0x44, 0x01, 0x46, 0x47, 0x00,
 			]));
 		});
@@ -256,7 +256,7 @@ describe('Writes strings correctly', function() {
 			};
 			rb.writeRecord(recordType, data);
 
-			assert.deepEqual(rb.getTypedArray(Uint8Array), Uint8Array.from([
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
 				0x41, 0x42, 0x20, 0x01, 0xFB, 0x46, 0x47, 0x48,
 			]));
 		});

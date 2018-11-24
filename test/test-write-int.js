@@ -51,7 +51,7 @@ describe('Writes integer values correctly', function() {
 		};
 		rb.writeRecord(recordType, data);
 
-		assert.deepEqual(rb.getTypedArray(Uint8Array), expected);
+		assert.deepEqual(rb.getU8(), expected);
 	});
 
 	it('uint16le', function() {
@@ -72,7 +72,7 @@ describe('Writes integer values correctly', function() {
 		};
 		rb.writeRecord(recordType, data);
 
-		assert.deepEqual(rb.getTypedArray(Uint8Array), expected);
+		assert.deepEqual(rb.getU8(), expected);
 	});
 
 	it('uint16be', function() {
@@ -93,7 +93,7 @@ describe('Writes integer values correctly', function() {
 		};
 		rb.writeRecord(recordType, data);
 
-		assert.deepEqual(rb.getTypedArray(Uint8Array), expected);
+		assert.deepEqual(rb.getU8(), expected);
 	});
 
 	it('uint32le', function() {
@@ -110,7 +110,7 @@ describe('Writes integer values correctly', function() {
 		};
 		rb.writeRecord(recordType, data);
 
-		assert.deepEqual(rb.getTypedArray(Uint8Array), expected);
+		assert.deepEqual(rb.getU8(), expected);
 	});
 
 	it('uint32be', function() {
@@ -127,7 +127,7 @@ describe('Writes integer values correctly', function() {
 		};
 		rb.writeRecord(recordType, data);
 
-		assert.deepEqual(rb.getTypedArray(Uint8Array), expected);
+		assert.deepEqual(rb.getU8(), expected);
 	});
 
 	it('int8', function() {
@@ -156,7 +156,7 @@ describe('Writes integer values correctly', function() {
 		};
 		rb.writeRecord(recordType, data);
 
-		assert.deepEqual(rb.getTypedArray(Uint8Array), expected);
+		assert.deepEqual(rb.getU8(), expected);
 	});
 
 	it('int16le', function() {
@@ -177,7 +177,7 @@ describe('Writes integer values correctly', function() {
 		};
 		rb.writeRecord(recordType, data);
 
-		assert.deepEqual(rb.getTypedArray(Uint8Array), expected);
+		assert.deepEqual(rb.getU8(), expected);
 	});
 
 	it('int16be', function() {
@@ -198,7 +198,7 @@ describe('Writes integer values correctly', function() {
 		};
 		rb.writeRecord(recordType, data);
 
-		assert.deepEqual(rb.getTypedArray(Uint8Array), expected);
+		assert.deepEqual(rb.getU8(), expected);
 	});
 
 	it('int32le', function() {
@@ -215,7 +215,7 @@ describe('Writes integer values correctly', function() {
 		};
 		rb.writeRecord(recordType, data);
 
-		assert.deepEqual(rb.getTypedArray(Uint8Array), expected);
+		assert.deepEqual(rb.getU8(), expected);
 	});
 
 	it('int32be', function() {
@@ -232,6 +232,6 @@ describe('Writes integer values correctly', function() {
 		};
 		rb.writeRecord(recordType, data);
 
-		assert.deepEqual(rb.getTypedArray(Uint8Array), expected);
+		assert.deepEqual(rb.getU8(), expected);
 	});
 });

@@ -63,16 +63,8 @@ module.exports = class RecordBuffer
 		}
 	}
 
-	getArrayBuffer() {
-		return this.buffer;
-	}
-
-	getTypedArray(TArray, offset = 0, len) {
-		return new TArray(this.buffer, offset, len || this.length)
-	}
-
-	getView(offset = 0, len) {
-		return new DataView(this.buffer, offset, len || this.length);
+	getU8(offset = 0, len) {
+		return new Uint8Array(this.buffer, offset, len || this.length)
 	}
 
 	getPos() {
