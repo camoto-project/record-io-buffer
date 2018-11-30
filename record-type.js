@@ -119,6 +119,13 @@ module.exports = {
 			}
 			return s;
 		},
+		toU8: s => {
+			let u8 = new Uint8Array(s.length);
+			for (let i = 0; i < s.length; i++) {
+				u8[i] = mapIBM437.indexOf(s.charCodeAt(i));
+			}
+			return u8;
+		},
 		fixed: {
 			/**
 			 * Fixed-length string with no null termination.
