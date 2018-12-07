@@ -36,7 +36,7 @@ module.exports = class RecordBuffer
 		} else if (p instanceof ArrayBuffer) {
 			this.buffer = p;
 			this.length = p.byteLength;
-		} else if (p.buffer && (p.byteOffset !== undefined)) { // TypedArray
+		} else if (p && p.buffer && (p.byteOffset !== undefined)) { // TypedArray
 			this.buffer = new ArrayBuffer(p.byteLength);
 			const src = new Uint8Array(p.buffer, p.byteOffset, p.byteLength);
 			let dv = new Uint8Array(this.buffer);
