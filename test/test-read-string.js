@@ -114,6 +114,24 @@ describe('Reads strings correctly', function() {
 
 			assert.equal(actual.test, 'AB \u263A\u221AFG');
 		});
+
+		it('Skips over the null terminator byte', function() {
+			let rb = new RecordBuffer(Uint8Array.from([
+				0x41, 0x42, 0x00, 0x44, 0x45, 0x00, 0x47, 0x48,
+			]).buffer);
+
+			const recordType = {
+				// Read seven chars to make sure we don't get the eighth in the buffer.
+				test1: RecordType.string.variable.reqTerm(7),
+				test2: RecordType.string.variable.reqTerm(7),
+			};
+
+			const actual = rb.readRecord(recordType);
+
+			assert.equal(actual.test1, 'AB');
+			assert.equal(actual.test2, 'DE');
+		});
+
 	});
 
 	// Same as variable.reqTerm
@@ -146,6 +164,23 @@ describe('Reads strings correctly', function() {
 			const actual = rb.readRecord(recordType);
 
 			assert.equal(actual.test, 'AB \u263A\u221AFG');
+		});
+
+		it('Skips over the null terminator byte', function() {
+			let rb = new RecordBuffer(Uint8Array.from([
+				0x41, 0x42, 0x00, 0x44, 0x45, 0x00, 0x47, 0x48,
+			]).buffer);
+
+			const recordType = {
+				// Read seven chars to make sure we don't get the eighth in the buffer.
+				test1: RecordType.string.variable.optTerm(7),
+				test2: RecordType.string.variable.optTerm(7),
+			};
+
+			const actual = rb.readRecord(recordType);
+
+			assert.equal(actual.test1, 'AB');
+			assert.equal(actual.test2, 'DE');
 		});
 	});
 });

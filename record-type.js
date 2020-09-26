@@ -201,7 +201,7 @@ module.exports = {
 			reqTerm: lenMax => ({
 				read: rb => {
 					const s = dataViewToString(rb.dataview, rb.pos, lenMax, true);
-					rb.pos += s.length;
+					rb.pos += s.length + 1;
 					return s;
 				},
 				write: (rb, val) => {
@@ -224,7 +224,7 @@ module.exports = {
 				// Same as string.fixed.reqTerm
 				read: rb => {
 					const s = dataViewToString(rb.dataview, rb.pos, lenMax, true);
-					rb.pos += s.length;
+					rb.pos += s.length + 1;
 					return s;
 				},
 				write: (rb, val) => {
