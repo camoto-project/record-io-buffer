@@ -13,7 +13,7 @@ Example:
     	},
     };
 
-    let buffer = new BufferWalk(content);
+    let buffer = new RecordBuffer(content);
     let header = buffer.readRecord(recordTypes.header);
 
     console.log(`There are ${header.fileCount} files.`);
@@ -28,6 +28,13 @@ There are some utility functions too:
     const str = RecordType.string.fromArray(data);
     console.log(str);
     // Outputs: A☺☻░▒▓♪◙
+
+Although the idea is to read and write whole records, individual fields can
+be read and written if needed, which may be simpler if the record would
+otherwise only have one element:
+
+    let buffer = new RecordBuffer(content);
+    let count = buffer.read(RecordType.int.u32le); // read one UINT32LE
 
 ## Reference
 
