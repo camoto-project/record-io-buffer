@@ -75,7 +75,7 @@ module.exports = class RecordBuffer
 	/**
 	 * @param {Object} buf
 	 *   Source data to copy here.  Can be a {Uint8Array}, a normal {Array} of
-	 *   numbers (0-255) or an {ArrayBuffer}.
+	 *   numbers (0-255), an {ArrayBuffer} or another {RecordBuffer}.
 	 *
 	 * @return None.
 	 *
@@ -86,6 +86,8 @@ module.exports = class RecordBuffer
 			// ArrayBuffer objects can't be written directly, so access them via a
 			// TypedArray instead.
 			buf = new Uint8Array(buf);
+		} else if (buf instanceof RecordBuffer) {
+			buf = buf.getU8();
 		}
 		this.ensureFreeSpace(buf.length);
 		let target = new Uint8Array(this.buffer, this.pos, buf.length);
