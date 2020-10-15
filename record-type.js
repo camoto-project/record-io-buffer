@@ -304,5 +304,38 @@ module.exports = {
 			write: (rb, val) => rb.dataview.setInt32(rb.pos, val, false),
 			len: 4,
 		},
+		midi: {
+			read: rb => {
+				let v = 0;
+				for (let i = 0; i < 4; i++) {
+					let n = rb.dataview.getUint8(rb.pos++);
+					v <<= 7;
+					v += (n & 0x7F);
+					if (!(n & 0x80)) break;
+				}
+				return v;
+			},
+			write: (rb, val) => {
+				if (val > 0x1FFFFFFF) {
+					throw new Error(`Value ${val} is too large to write to a MIDI file.`);
+				}
+				let out = [];
+				let first = true;
+				for (let i = 0; i < 4; i++) {
+					let n = (val >> 21) & 0xFF;
+					val = (val << 7) & 0x0FFFFFFF;
+
+					// Skip leading zeroes.
+					if (first && (n === 0)) continue;
+					first = false;
+
+					// Set the high bit if there's more data to come.
+					if (val) n |= 0x80;
+					rb.dataview.setUint8(rb.pos++, n);
+					if (!val) break;
+				}
+			},
+			len: 0,
+		},
 	},
 };

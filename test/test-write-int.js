@@ -234,4 +234,26 @@ describe('Writes integer values correctly', function() {
 
 		assert.deepEqual(rb.getU8(), expected);
 	});
+
+	it('midi', function() {
+		const mexpected = Uint8Array.from([0xFE, 0xDC, 0xBA, 0x18, 0x86, 0xD4, 0x32, 0x90, 0x01, 0x05]);
+		let rb = new RecordBuffer(10);
+
+		const recordType = {
+			four: RecordType.int.midi,
+			three: RecordType.int.midi,
+			two: RecordType.int.midi,
+			one: RecordType.int.midi,
+		};
+
+		const data = {
+			four: 0x0FD71D18,
+			three: 0x01AA32,
+			two: 0x0801,
+			one: 0x05,
+		};
+		rb.writeRecord(recordType, data);
+
+		assert.deepEqual(rb.getU8(), mexpected);
+	});
 });

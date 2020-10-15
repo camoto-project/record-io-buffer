@@ -204,4 +204,23 @@ describe('Reads integer values correctly', function() {
 		assert.equal(actual.one, 0 - Math.pow(2, 32) + 0xFEDCBA98);
 		assert.equal(actual.two, 0x76543210);
 	});
+
+	it('midi', function() {
+		const minput = Uint8Array.from([0xFE, 0xDC, 0xBA, 0x18, 0x86, 0xD4, 0x32, 0x90, 0x01, 0x05]).buffer;
+		let rb = new RecordBuffer(minput);
+
+		const recordType = {
+			four: RecordType.int.midi,
+			three: RecordType.int.midi,
+			two: RecordType.int.midi,
+			one: RecordType.int.midi,
+		};
+
+		const actual = rb.readRecord(recordType);
+
+		assert.equal(actual.four,  0x0FD71D18);
+		assert.equal(actual.three,   0x01AA32);
+		assert.equal(actual.two,       0x0801);
+		assert.equal(actual.one,         0x05);
+	});
 });
