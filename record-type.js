@@ -330,9 +330,8 @@ module.exports = {
 					first = false;
 
 					// Set the high bit if there's more data to come.
-					if (val) n |= 0x80;
+					if (i < 3) n |= 0x80;
 					rb.dataview.setUint8(rb.pos++, n);
-					if (!val) break;
 				}
 			},
 			len: 0,
