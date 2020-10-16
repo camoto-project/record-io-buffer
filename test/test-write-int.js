@@ -236,7 +236,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('midi', function() {
-		const mexpected = Uint8Array.from([0xFE, 0xDC, 0xBA, 0x18, 0x86, 0xD4, 0x32, 0x90, 0x01, 0x05]);
+		const mexpected = Uint8Array.from([0xFE, 0xDC, 0xBA, 0x18, 0x86, 0xD4, 0x32, 0x90, 0x01, 0x05, 0x00]);
 		let rb = new RecordBuffer(10);
 
 		const recordType = {
@@ -244,6 +244,7 @@ describe('Writes integer values correctly', function() {
 			three: RecordType.int.midi,
 			two: RecordType.int.midi,
 			one: RecordType.int.midi,
+			zero: RecordType.int.midi,
 		};
 
 		const data = {
@@ -251,6 +252,7 @@ describe('Writes integer values correctly', function() {
 			three: 0x01AA32,
 			two: 0x0801,
 			one: 0x05,
+			zero: 0x00,
 		};
 		rb.writeRecord(recordType, data);
 

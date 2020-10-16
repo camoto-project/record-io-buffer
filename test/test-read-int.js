@@ -206,7 +206,7 @@ describe('Reads integer values correctly', function() {
 	});
 
 	it('midi', function() {
-		const minput = Uint8Array.from([0xFE, 0xDC, 0xBA, 0x18, 0x86, 0xD4, 0x32, 0x90, 0x01, 0x05]).buffer;
+		const minput = Uint8Array.from([0xFE, 0xDC, 0xBA, 0x18, 0x86, 0xD4, 0x32, 0x90, 0x01, 0x05, 0x00]).buffer;
 		let rb = new RecordBuffer(minput);
 
 		const recordType = {
@@ -214,6 +214,7 @@ describe('Reads integer values correctly', function() {
 			three: RecordType.int.midi,
 			two: RecordType.int.midi,
 			one: RecordType.int.midi,
+			zero: RecordType.int.midi,
 		};
 
 		const actual = rb.readRecord(recordType);
@@ -222,5 +223,6 @@ describe('Reads integer values correctly', function() {
 		assert.equal(actual.three,   0x01AA32);
 		assert.equal(actual.two,       0x0801);
 		assert.equal(actual.one,         0x05);
+		assert.equal(actual.zero,        0x00);
 	});
 });

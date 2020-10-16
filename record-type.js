@@ -326,7 +326,7 @@ module.exports = {
 					val = (val << 7) & 0x0FFFFFFF;
 
 					// Skip leading zeroes.
-					if (first && (n === 0)) continue;
+					if (first && (n === 0) && (i !== 3)) continue;
 					first = false;
 
 					// Set the high bit if there's more data to come.
