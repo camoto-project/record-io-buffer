@@ -87,6 +87,34 @@ describe('Reads integer values correctly', function() {
 		assert.equal(actual.four, 0x3210);
 	});
 
+	it('uint24le', function() {
+		let rb = new RecordBuffer(input);
+
+		const recordType = {
+			one: RecordType.int.u24le,
+			two: RecordType.int.u24le,
+		};
+
+		const actual = rb.readRecord(recordType);
+
+		assert.equal(actual.one, 0xBADCFE);
+		assert.equal(actual.two, 0x547698);
+	});
+
+	it('uint24be', function() {
+		let rb = new RecordBuffer(input);
+
+		const recordType = {
+			one: RecordType.int.u24be,
+			two: RecordType.int.u24be,
+		};
+
+		const actual = rb.readRecord(recordType);
+
+		assert.equal(actual.one, 0xFEDCBA);
+		assert.equal(actual.two, 0x987654);
+	});
+
 	it('uint32le', function() {
 		let rb = new RecordBuffer(input);
 
@@ -175,6 +203,36 @@ describe('Reads integer values correctly', function() {
 		assert.equal(actual.two, -65536 + 0xBA98);
 		assert.equal(actual.three, 0x7654);
 		assert.equal(actual.four, 0x3210);
+	});
+
+	it('int24le', function() {
+		let rb = new RecordBuffer(input);
+
+		const recordType = {
+			one: RecordType.int.s24le,
+			pad: RecordType.int.u8,
+			two: RecordType.int.s24le,
+		};
+
+		const actual = rb.readRecord(recordType);
+
+		assert.equal(actual.one, 0 - Math.pow(2, 24) + 0xBADCFE);
+		assert.equal(actual.two, 0x325476);
+	});
+
+	it('int24be', function() {
+		let rb = new RecordBuffer(input);
+
+		const recordType = {
+			one: RecordType.int.s24be,
+			pad: RecordType.int.u8,
+			two: RecordType.int.s24be,
+		};
+
+		const actual = rb.readRecord(recordType);
+
+		assert.equal(actual.one, 0 - Math.pow(2, 24) + 0xFEDCBA);
+		assert.equal(actual.two, 0x765432);
 	});
 
 	it('int32le', function() {

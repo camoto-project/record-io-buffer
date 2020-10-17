@@ -269,6 +269,28 @@ module.exports = {
 			write: (rb, val) => rb.dataview.setUint16(rb.pos, val, false),
 			len: 2,
 		},
+		u24le: {
+			read: rb => (
+				rb.dataview.getUint8(rb.pos, true) |
+				(rb.dataview.getUint16(rb.pos + 1, true) << 8)
+			),
+			write: (rb, val) => {
+				rb.dataview.setUint8(rb.pos, val & 0xFF, true);
+				rb.dataview.setUint16(rb.pos + 1, val >> 8, true);
+			},
+			len: 3,
+		},
+		u24be: {
+			read: rb => (
+				(rb.dataview.getUint16(rb.pos, false) << 8) |
+				rb.dataview.getUint8(rb.pos + 2, false)
+			),
+			write: (rb, val) => {
+				rb.dataview.setUint16(rb.pos, val >> 8, false);
+				rb.dataview.setUint8(rb.pos + 2, val & 0xFF, false);
+			},
+			len: 3,
+		},
 		u32le: {
 			read: rb => rb.dataview.getUint32(rb.pos, true),
 			write: (rb, val) => rb.dataview.setUint32(rb.pos, val, true),
@@ -293,6 +315,28 @@ module.exports = {
 			read: rb => rb.dataview.getInt16(rb.pos, false),
 			write: (rb, val) => rb.dataview.setInt16(rb.pos, val, false),
 			len: 2,
+		},
+		s24le: {
+			read: rb => (
+				rb.dataview.getUint8(rb.pos, true) |
+				(rb.dataview.getInt16(rb.pos + 1, true) << 8)
+			),
+			write: (rb, val) => {
+				rb.dataview.setUint8(rb.pos, val & 0xFF, true);
+				rb.dataview.setInt16(rb.pos + 1, val >> 8, true);
+			},
+			len: 3,
+		},
+		s24be: {
+			read: rb => (
+				(rb.dataview.getInt16(rb.pos, false) << 8) |
+				rb.dataview.getUint8(rb.pos + 2, false)
+			),
+			write: (rb, val) => {
+				rb.dataview.setInt16(rb.pos, val >> 8, false);
+				rb.dataview.setUint8(rb.pos + 2, val & 0xFF, false);
+			},
+			len: 3,
 		},
 		s32le: {
 			read: rb => rb.dataview.getInt32(rb.pos, true),

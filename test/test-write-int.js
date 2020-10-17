@@ -96,6 +96,48 @@ describe('Writes integer values correctly', function() {
 		assert.deepEqual(rb.getU8(), expected);
 	});
 
+	it('uint24le', function() {
+		let rb = new RecordBuffer(8);
+
+		const recordType = {
+			one: RecordType.int.u24le,
+			pad1: RecordType.int.u8,
+			two: RecordType.int.u24le,
+			pad2: RecordType.int.u8,
+		};
+
+		const data = {
+			one: 0xBADCFE,
+			pad1: 0x98,
+			two: 0x325476,
+			pad2: 0x10,
+		};
+		rb.writeRecord(recordType, data);
+
+		assert.deepEqual(rb.getU8(), expected);
+	});
+
+	it('uint24be', function() {
+		let rb = new RecordBuffer(8);
+
+		const recordType = {
+			one: RecordType.int.u24be,
+			pad1: RecordType.int.u8,
+			two: RecordType.int.u24be,
+			pad2: RecordType.int.u8,
+		};
+
+		const data = {
+			one: 0xFEDCBA,
+			pad1: 0x98,
+			two: 0x765432,
+			pad2: 0x10,
+		};
+		rb.writeRecord(recordType, data);
+
+		assert.deepEqual(rb.getU8(), expected);
+	});
+
 	it('uint32le', function() {
 		let rb = new RecordBuffer(8);
 
@@ -195,6 +237,48 @@ describe('Writes integer values correctly', function() {
 			two: -65536 + 0xBA98,
 			three: 0x7654,
 			four: 0x3210,
+		};
+		rb.writeRecord(recordType, data);
+
+		assert.deepEqual(rb.getU8(), expected);
+	});
+
+	it('int24le', function() {
+		let rb = new RecordBuffer(8);
+
+		const recordType = {
+			one: RecordType.int.s24le,
+			pad1: RecordType.int.u8,
+			two: RecordType.int.s24le,
+			pad2: RecordType.int.u8,
+		};
+
+		const data = {
+			one: 0 - Math.pow(2, 32) + 0xBADCFE,
+			pad1: 0x98,
+			two: 0x325476,
+			pad2: 0x10,
+		};
+		rb.writeRecord(recordType, data);
+
+		assert.deepEqual(rb.getU8(), expected);
+	});
+
+	it('int24be', function() {
+		let rb = new RecordBuffer(8);
+
+		const recordType = {
+			one: RecordType.int.s24be,
+			pad1: RecordType.int.u8,
+			two: RecordType.int.s24be,
+			pad2: RecordType.int.u8,
+		};
+
+		const data = {
+			one: 0 - Math.pow(2, 32) + 0xFEDCBA,
+			pad1: 0x98,
+			two: 0x765432,
+			pad2: 0x10,
 		};
 		rb.writeRecord(recordType, data);
 
