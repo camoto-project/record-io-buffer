@@ -20,6 +20,7 @@
 const assert = require('assert');
 
 const { RecordBuffer, RecordType } = require('../index.js');
+const { createRecordBuffer } = require('./util.js');
 
 describe('Writes strings correctly', function() {
 
@@ -34,7 +35,7 @@ describe('Writes strings correctly', function() {
 			const TRecordType = types[key];
 
 			it('Includes nulls in fixed length strings', function() {
-				let rb = new RecordBuffer(8);
+				let rb = createRecordBuffer(8);
 
 				const recordType = {
 					one: TRecordType(7),
@@ -53,7 +54,7 @@ describe('Writes strings correctly', function() {
 			});
 
 			it('Pads with nulls in fixed length strings', function() {
-				let rb = new RecordBuffer(8);
+				let rb = createRecordBuffer(8);
 
 				const recordType = {
 					one: TRecordType(7),
@@ -77,7 +78,7 @@ describe('Writes strings correctly', function() {
 	describe('string.fixed.reqTerm', function() {
 
 		it('Stops writing at a null in fixed length strings', function() {
-			let rb = new RecordBuffer(8);
+			let rb = createRecordBuffer(8);
 
 			const recordType = {
 				one: RecordType.string.fixed.reqTerm(4),
@@ -96,7 +97,7 @@ describe('Writes strings correctly', function() {
 		});
 
 		it('Single length field only has room for a null', function() {
-			let rb = new RecordBuffer(8);
+			let rb = createRecordBuffer(8);
 
 			const recordType = {
 				one: RecordType.string.fixed.reqTerm(4),
@@ -117,7 +118,7 @@ describe('Writes strings correctly', function() {
 		});
 
 		it('Truncates string to leave room for terminating null', function() {
-			let rb = new RecordBuffer(8);
+			let rb = createRecordBuffer(8);
 
 			const recordType = {
 				one: RecordType.string.fixed.reqTerm(6),
@@ -140,7 +141,7 @@ describe('Writes strings correctly', function() {
 	describe('string.variable.reqTerm', function() {
 
 		it('Stops writing at a null in variable length strings', function() {
-			let rb = new RecordBuffer(8);
+			let rb = createRecordBuffer(8);
 
 			const recordType = {
 				one: RecordType.string.variable.reqTerm(4),
@@ -159,7 +160,7 @@ describe('Writes strings correctly', function() {
 		});
 
 		it('Single length field only has room for a null', function() {
-			let rb = new RecordBuffer(8);
+			let rb = createRecordBuffer(8);
 
 			const recordType = {
 				one: RecordType.string.variable.reqTerm(4),
@@ -180,7 +181,7 @@ describe('Writes strings correctly', function() {
 		});
 
 		it('Truncates string to leave room for terminating null', function() {
-			let rb = new RecordBuffer(8);
+			let rb = createRecordBuffer(8);
 
 			const recordType = {
 				one: RecordType.string.variable.reqTerm(6),
@@ -203,7 +204,7 @@ describe('Writes strings correctly', function() {
 	describe('string.variable.optTerm', function() {
 
 		it('Stops writing at a null in variable length strings', function() {
-			let rb = new RecordBuffer(8);
+			let rb = createRecordBuffer(8);
 
 			const recordType = {
 				one: RecordType.string.variable.optTerm(4),
@@ -222,7 +223,7 @@ describe('Writes strings correctly', function() {
 		});
 
 		it('Single length field does not have room for the optional null', function() {
-			let rb = new RecordBuffer(8);
+			let rb = createRecordBuffer(8);
 
 			const recordType = {
 				one: RecordType.string.variable.optTerm(4),
@@ -243,7 +244,7 @@ describe('Writes strings correctly', function() {
 		});
 
 		it('Truncates string but ignores terminating null', function() {
-			let rb = new RecordBuffer(8);
+			let rb = createRecordBuffer(8);
 
 			const recordType = {
 				one: RecordType.string.variable.optTerm(6),

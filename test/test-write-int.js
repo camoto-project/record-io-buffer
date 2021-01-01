@@ -20,13 +20,14 @@
 const assert = require('assert');
 
 const { RecordBuffer, RecordType } = require('../index.js');
+const { createRecordBuffer } = require('./util.js');
 
 describe('Writes integer values correctly', function() {
 
 	const expected = Uint8Array.from([0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10]);
 
 	it('uint8', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.u8,
@@ -55,7 +56,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('uint16le', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.u16le,
@@ -76,7 +77,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('uint16be', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.u16be,
@@ -97,7 +98,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('uint24le', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.u24le,
@@ -118,7 +119,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('uint24be', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.u24be,
@@ -139,7 +140,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('uint32le', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.u32le,
@@ -156,7 +157,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('uint32be', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.u32be,
@@ -173,7 +174,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('int8', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.s8,
@@ -202,7 +203,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('int16le', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.s16le,
@@ -223,7 +224,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('int16be', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.s16be,
@@ -244,7 +245,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('int24le', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.s24le,
@@ -265,7 +266,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('int24be', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.s24be,
@@ -286,7 +287,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('int32le', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.s32le,
@@ -303,7 +304,7 @@ describe('Writes integer values correctly', function() {
 	});
 
 	it('int32be', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		const recordType = {
 			one: RecordType.int.s32be,
@@ -330,7 +331,7 @@ describe('Writes integer values correctly', function() {
 			0x90, 0x80, 0x00,
 			0x90, 0x80, 0x80, 0x00,
 		]);
-		let rb = new RecordBuffer(10);
+		let rb = createRecordBuffer(10);
 
 		const recordType = {
 			four: RecordType.int.midi,

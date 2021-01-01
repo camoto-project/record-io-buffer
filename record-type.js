@@ -94,9 +94,9 @@ function writeString(s, dv, offset, len, nullTerm, pad = true) {
 	// field length.
 	if (!lenPad || (i + lenPad > len)) return i;
 
-	const padding = new ArrayBuffer(lenPad); // init to zero
-	let target = new Uint8Array(dv.buffer, dv.byteOffset + i, lenPad);
-	target.set(padding);
+	for (let p = 0; p < lenPad; p++) {
+		dv.setUint8(offset + i + p, 0);
+	}
 
 	return i + lenPad;
 }

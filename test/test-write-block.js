@@ -20,11 +20,12 @@
 const assert = require('assert');
 
 const { RecordBuffer, RecordType } = require('../index.js');
+const { createRecordBuffer } = require('./util.js');
 
 describe('Writes blocks of data correctly', function() {
 
 	it('Writes an array of numbers as a list of bytes', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		rb.put([0x12, 0x34]);
 		rb.put([0xFF, 0x00]);
@@ -36,7 +37,7 @@ describe('Writes blocks of data correctly', function() {
 	});
 
 	it('Writes a Uint8Array', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		let ab = new ArrayBuffer(7);
 		let dv = new Uint8Array(ab);
@@ -56,7 +57,7 @@ describe('Writes blocks of data correctly', function() {
 	});
 
 	it('Writes an ArrayBuffer', function() {
-		let rb = new RecordBuffer(8);
+		let rb = createRecordBuffer(8);
 
 		let ab = new ArrayBuffer(7);
 		let dv = new Uint8Array(ab);
@@ -76,7 +77,7 @@ describe('Writes blocks of data correctly', function() {
 	});
 
 	it('Enlarges the array as needed', function() {
-		let rb = new RecordBuffer(4);
+		let rb = createRecordBuffer(4);
 
 		rb.put([0x12, 0x34]);
 		rb.put([0x56, 0x78, 0x9A]);
