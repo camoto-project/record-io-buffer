@@ -17,9 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const assert = require('assert');
-
-const { RecordBuffer, RecordType } = require('../index.js');
+import assert from 'assert';
+import { RecordBuffer, RecordType } from '../index.js';
 
 describe('Reads integer values correctly', function() {
 

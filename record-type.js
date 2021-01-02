@@ -101,7 +101,7 @@ function writeString(s, dv, offset, len, nullTerm, pad = true) {
 	return i + lenPad;
 }
 
-module.exports = {
+export default {
 	string: {
 		/**
 		 * Mostly for debugging, convert an array of bytes to a string.

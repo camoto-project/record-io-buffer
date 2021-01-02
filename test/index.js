@@ -17,12 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const assert = require('assert');
-
-const { RecordBuffer, RecordType } = require('../index.js');
+import assert from 'assert';
+import { RecordBuffer, RecordType } from '../index.js';
 
 // Override the default colours so we can actually see them
-var colors = require('mocha/lib/reporters/base').colors;
+import { colors } from 'mocha/lib/reporters/base.js';
 colors['diff added'] = '1;33';
 colors['diff removed'] = '1;31';
 colors['green'] = '1;32';

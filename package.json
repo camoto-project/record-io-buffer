@@ -2,6 +2,7 @@
   "name": "@camoto/record-io-buffer",
   "version": "2.4.1",
   "description": "Read/write data records into Buffer instances",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"

@@ -17,7 +17,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-module.exports = {
-	RecordBuffer: require('./record-buffer.js'),
-	RecordType: require('./record-type.js'),
-};
+export { default as RecordBuffer } from './record-buffer.js';
+export { default as RecordType } from './record-type.js';

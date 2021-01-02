@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const { RecordBuffer } = require('../index.js');
+import { RecordBuffer } from '../index.js';
 
 // Create a record buffer but initialise all the bytes to non-zero values.
 function createRecordBuffer(len) {
@@ -28,6 +28,4 @@ function createRecordBuffer(len) {
 	return rb;
 }
 
-module.exports = {
-	createRecordBuffer,
-};
+export { createRecordBuffer };
