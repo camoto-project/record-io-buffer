@@ -26,5 +26,11 @@
   "homepage": "https://github.com/Malvineous/record-io-buffer#readme",
   "devDependencies": {
     "mocha": "^8.2.1"
+  },
+  "files": [
+    "*.js"
+  ],
+  "directories": {
+    "test": "test"
   }
 }
