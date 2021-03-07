@@ -76,4 +76,30 @@ describe('Reads blocks of data correctly', function() {
 		});
 
 	});
+
+	describe('get()', function() {
+
+		it('Retrieves the correct window onto the data', function() {
+			let rb = new RecordBuffer(Uint8Array.from([
+				0x12, 0x34, 0xFF, 0x00, 0x80, 0x7F, 0x01,
+			]).buffer);
+
+			{
+				let content = rb.get(2);
+
+				assert.equal(content[0], 0x12);
+				assert.equal(content[1], 0x34);
+				assert.equal(content[2], undefined);
+			}
+			{
+				let content = rb.get(3);
+
+				assert.equal(content[0], 0xFF);
+				assert.equal(content[1], 0x00);
+				assert.equal(content[2], 0x80);
+				assert.equal(content[3], undefined);
+			}
+		});
+
+	});
 });

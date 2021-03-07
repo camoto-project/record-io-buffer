@@ -63,6 +63,20 @@ export default class RecordBuffer
 		}
 	}
 
+	/// Get access to the underlying bytes.
+	/**
+	 * @param {Number} offset
+	 *   Start of buffer, defaults to 0.
+	 *
+	 * @param {Number} len
+	 *   Number of bytes to retrieve, defaults to the size of the buffer.
+	 *
+	 * This does not advance the file pointer and is used when processing on the
+	 * buffer has been complete and it should be passed on in full to another
+	 * step, such as writing it to a file.
+	 *
+	 * @see get() to read a block of data and advance the file pointer.
+	 */
 	getU8(offset = 0, len) {
 		return new Uint8Array(this.buffer, offset, len || this.length)
 	}
@@ -94,6 +108,24 @@ export default class RecordBuffer
 		target.set(buf);
 		this.pos += buf.length;
 		this.updateLength();
+	}
+
+	/// Get a block of data, advancing the file pointer.
+	/**
+	 * @param {Number} len
+	 *   Number of bytes to read.
+	 *
+	 * @return Uint8Array containing the data read.
+	 *
+	 * @postconditions The file pointer has been advanced by `len` bytes.
+	 *
+	 * @see getU8() to grab the whole buffer without touching the file pointer.
+	 */
+	get(len) {
+		let p = new Uint8Array(this.buffer, this.pos, len);
+		this.pos += len;
+
+		return p;
 	}
 
 	/// Read a value directly.
