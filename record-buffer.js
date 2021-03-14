@@ -69,7 +69,7 @@ export default class RecordBuffer
 	 *   Start of buffer, defaults to 0.
 	 *
 	 * @param {Number} len
-	 *   Number of bytes to retrieve, defaults to the size of the buffer.
+	 *   Number of bytes to retrieve, defaults to the rest of the buffer.
 	 *
 	 * This does not advance the file pointer and is used when processing on the
 	 * buffer has been complete and it should be passed on in full to another
@@ -78,7 +78,7 @@ export default class RecordBuffer
 	 * @see get() to read a block of data and advance the file pointer.
 	 */
 	getU8(offset = 0, len) {
-		return new Uint8Array(this.buffer, offset, len || this.length)
+		return new Uint8Array(this.buffer, offset, len || (this.length - offset));
 	}
 
 	getPos() {
