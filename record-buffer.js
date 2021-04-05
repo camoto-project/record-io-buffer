@@ -78,7 +78,11 @@ export default class RecordBuffer
 	 * @see get() to read a block of data and advance the file pointer.
 	 */
 	getU8(offset = 0, len) {
-		return new Uint8Array(this.buffer, offset, len || (this.length - offset));
+		if (len === undefined) {
+			// Only go to EOF if `len` is omitted, not when it's zero.
+			len = (this.length - offset);
+		}
+		return new Uint8Array(this.buffer, offset, len);
 	}
 
 	getPos() {

@@ -89,6 +89,16 @@ describe('Reads blocks of data correctly', function() {
 			assert.equal(content[4], undefined);
 		});
 
+		it('Retrieves the correct window with a zero length', function() {
+			let rb = new RecordBuffer(Uint8Array.from([
+				0x12, 0x34, 0xFF, 0x00, 0x80, 0x7F, 0x01,
+			]).buffer);
+
+			let content = rb.getU8(4, 0);
+
+			assert.equal(content.length, 0);
+		});
+
 	});
 
 	describe('get()', function() {
