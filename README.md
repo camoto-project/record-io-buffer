@@ -1,5 +1,5 @@
 # Record I/O library for JS
-Copyright 2018 Adam Nielsen <<malvineous@shikadi.net>>  
+Copyright 2018-2021 Adam Nielsen <<malvineous@shikadi.net>>  
 
 This is a utility library that can read from and write to memory buffers, in
 logical records that are defined in terms of low-level data types.
