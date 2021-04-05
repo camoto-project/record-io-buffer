@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Malvineous/record-io-buffer.git"
+    "url": "git+https://github.com/camoto-project/record-io-buffer.git"
   },
   "keywords": [
     "buffer",
@@ -21,9 +21,9 @@
   "author": "Adam Nielsen <malvineous@shikadi.net>",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/Malvineous/record-io-buffer/issues"
+    "url": "https://github.com/camoto-project/record-io-buffer/issues"
   },
-  "homepage": "https://github.com/Malvineous/record-io-buffer#readme",
+  "homepage": "https://github.com/camoto-project/record-io-buffer#readme",
   "devDependencies": {
     "mocha": "^8.2.1"
   },
