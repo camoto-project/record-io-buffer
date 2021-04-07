@@ -24,8 +24,14 @@ export default class RecordBuffer
 	 *
 	 * @param {Number} | {ArrayBuffer} | {TypedArray} p
 	 *   Data source.
-	 *   - {Number} preallocates that much space to write into.
+	 *
+	 *   - {Number} preallocates that much space to write into.  The buffer starts
+	 *     with a length of zero and grows as needed, but specifying a value here
+	 *     can avoid memory reallocations as the data grows.  If this value is too
+	 *     small, the underlying array is enlarged by 1 kB at a time as needed.
+	 *
 	 *   - {ArrayBuffer} accesses the buffer directly (no copying), so is fast.
+	 *
 	 *   - {TypedArray} copies the array into a new ArrayBuffer, so incurs a
 	 *     cost during object construction.
 	 */
