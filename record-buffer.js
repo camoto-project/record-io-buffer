@@ -186,6 +186,26 @@ export default class RecordBuffer
 		this.length = Math.max(this.length, this.pos);
 	}
 
+	/// Make the buffer size a set value.
+	/**
+	 * This will drop any data already written that is beyond the given size.
+	 * The actual memory does not shrink, just the record of how many bytes of it
+	 * are valid.
+	 *
+	 * The read/write pointer is moved back to the end of the file if it was past
+	 * the truncate point, otherwise it is left unchanged.
+	 */
+	truncate(offset) {
+		if (offset === undefined) {
+			this.length = this.pos;
+		} else {
+			this.length = offset;
+			this.pos = Math.min(this.pos, this.length);
+		}
+		// Enlarge the buffer in case the truncate was bigger rather than smaller.
+		this.ensureFreeSpace(0);
+	}
+
 	/// Write a value directly.
 	/**
 	 * @param RecordType type

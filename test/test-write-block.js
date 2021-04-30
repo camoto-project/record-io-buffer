@@ -87,4 +87,32 @@ describe('Writes blocks of data correctly', function() {
 		]));
 	});
 
+	it('truncate() to smaller array', function() {
+		let rb = createRecordBuffer(4);
+
+		rb.put([0x12, 0x34]);
+		rb.put([0x56, 0x78, 0x9A]);
+		rb.put([0xBC, 0xDE]);
+
+		rb.truncate(6);
+
+		assert.deepEqual(rb.getU8(), Uint8Array.from([
+			0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC,
+		]));
+	});
+
+	it('truncate() to larger array', function() {
+		let rb = createRecordBuffer(4);
+
+		rb.put([0x12, 0x34]);
+		rb.put([0x56, 0x78, 0x9A]);
+		rb.put([0xBC, 0xDE]);
+
+		rb.truncate(8);
+
+		assert.deepEqual(rb.getU8(), Uint8Array.from([
+			0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0x00,
+		]));
+	});
+
 });
