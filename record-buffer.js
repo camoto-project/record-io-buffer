@@ -49,7 +49,7 @@ export default class RecordBuffer
 			dv.set(src);
 			this.length = p.byteLength;
 		} else {
-			throw new Error('Unsupported type passed to RecordBuffer constructor');
+			throw new Error(`Unsupported type "${typeof p}" for RecordBuffer`);
 		}
 		this.dataview = new DataView(this.buffer);
 		this.pos = 0;
