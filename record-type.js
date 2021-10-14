@@ -231,9 +231,40 @@ export default {
 					rb.pos += writeString(val + '\u0000', rb.dataview, rb.pos, lenMax, undefined, false);
 				},
 				len: 0,
+				lenAvailable: lenMax,
 			}),
 		},
 	},
+
+	/**
+	 * Block of raw bytes as a Uint8Array.
+	 *
+	 * Don't use this for large blocks of data that will only be read
+	 * occasionally, as putting it in as part of a record will cause it to be
+	 * read in full.
+	 *
+	 * This is intended for things like encrypted filenames in archives, where
+	 * the raw bytes have to be read and decoded before any character set
+	 * translation can take place.  Reading these as strings would cause the
+	 * decryption to fail.
+	 */
+	block: (len, pad = 0x00) => ({
+		read: rb => rb.getU8(rb.pos, len),
+		write: (rb, val) => {
+			if (val.length > len) {
+				val = val.slice(0, len);
+			}
+			rb.put(val);
+			if (val.length < len) {
+				// Pad to length
+				let p = new Uint8Array(len - val.length);
+				p.fill(pad);
+				rb.put(p);
+			}
+			rb.pos -= len;
+		},
+		len: len,
+	}),
 
 	/**
 	 * Unused bytes for padding and alignment.

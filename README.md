@@ -129,10 +129,20 @@ and a final terminating null will only be written if space allows.  If
 the string is the maximum length given (or longer), then it will be
 truncated but no final null byte will be written.
 
-##### padding(len, value)
+##### padding(len, value = 0x00)
 
 Unused bytes for padding and alignment.
 
 When reading, returns a Uint8Array with the data.
 
 When writing, fills the block with a single byte, by default 0x00.
+
+##### block(value, pad = 0x00)
+
+Raw Uint8Array for small binary data fields, such as encrypted filenames in
+archive files.
+
+When reading, returns a Uint8Array with the data.
+
+When writing, outputs the Uint8Array, stopping at `len` if it is longer, and
+padding with byte value `pad` if shorter.

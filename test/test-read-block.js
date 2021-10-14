@@ -126,4 +126,29 @@ describe('Reads blocks of data correctly', function() {
 		});
 
 	});
+
+	describe('as RecordType', function() {
+
+		it('read', function() {
+			let ua = Uint8Array.from([
+				0x12, 0x34, 0xFF, 0x00, 0x80, 0x7F, 0x01,
+			]);
+			let rb = new RecordBuffer(ua);
+
+			const recordType = {
+				one: RecordType.int.u8,
+				two: RecordType.block(3),
+				three: RecordType.int.u8,
+			};
+
+			const actual = rb.readRecord(recordType);
+
+			assert.equal(actual.one, 0x12);
+			assert.equal(actual.two[0], 0x34);
+			assert.equal(actual.two[1], 0xFF);
+			assert.equal(actual.two[2], 0x00);
+			assert.equal(actual.three, 0x80);
+		});
+
+	});
 });

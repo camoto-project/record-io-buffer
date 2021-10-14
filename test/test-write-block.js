@@ -115,4 +115,92 @@ describe('Writes blocks of data correctly', function() {
 		]));
 	});
 
+	describe('as RecordType', function() {
+
+		it('write', function() {
+			let rb = createRecordBuffer(8);
+
+			const recordType = {
+				one: RecordType.int.u8,
+				two: RecordType.block(3),
+				three: RecordType.int.u8,
+			};
+
+			const data = {
+				one: 0x12,
+				two: Uint8Array.from([0x34, 0xFF, 0x00]),
+				three: 0x80,
+			};
+			rb.writeRecord(recordType, data);
+
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
+				0x12, 0x34, 0xFF, 0x00, 0x80,
+			]));
+		});
+
+		it('write short', function() {
+			let rb = createRecordBuffer(8);
+
+			const recordType = {
+				one: RecordType.int.u8,
+				two: RecordType.block(3),
+				three: RecordType.int.u8,
+			};
+
+			const data = {
+				one: 0x12,
+				two: Uint8Array.from([0x34]),
+				three: 0x80,
+			};
+			rb.writeRecord(recordType, data);
+
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
+				0x12, 0x34, 0x00, 0x00, 0x80,
+			]));
+		});
+
+		it('write short, custom pad', function() {
+			let rb = createRecordBuffer(8);
+
+			const recordType = {
+				one: RecordType.int.u8,
+				two: RecordType.block(3, 0x56),
+				three: RecordType.int.u8,
+			};
+
+			const data = {
+				one: 0x12,
+				two: Uint8Array.from([0x34]),
+				three: 0x80,
+			};
+			rb.writeRecord(recordType, data);
+
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
+				0x12, 0x34, 0x56, 0x56, 0x80,
+			]));
+		});
+
+		it('write long', function() {
+			let rb = createRecordBuffer(8);
+
+			const recordType = {
+				one: RecordType.int.u8,
+				two: RecordType.block(3),
+				three: RecordType.int.u8,
+			};
+
+			const data = {
+				one: 0x12,
+				two: Uint8Array.from([0x34, 0xFF, 0x00, 0x56]),
+				three: 0x80,
+			};
+			rb.writeRecord(recordType, data);
+
+			assert.deepEqual(rb.getU8(), Uint8Array.from([
+				0x12, 0x34, 0xFF, 0x00, 0x80,
+			]));
+		});
+
+	});
+
 });
