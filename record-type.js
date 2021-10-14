@@ -142,6 +142,7 @@ export default {
 				read: rb => dataViewToString(rb.dataview, rb.pos, len, false),
 				write: (rb, val) => writeString(val, rb.dataview, rb.pos, len, false),
 				len: len,
+				lenAvailable: len,
 			}),
 
 			/**
@@ -163,6 +164,7 @@ export default {
 				read: rb => dataViewToString(rb.dataview, rb.pos, len, true),
 				write: (rb, val) => writeString(val, rb.dataview, rb.pos, len, true),
 				len: len, // always read same (fixed) length
+				lenAvailable: Math.max(0, len - 1),
 			}),
 
 			/**
@@ -180,6 +182,7 @@ export default {
 				// Same as string.fixed.noTerm
 				write: (rb, val) => writeString(val, rb.dataview, rb.pos, len, false),
 				len: len,
+				lenAvailable: len,
 			}),
 		},
 		variable: {
@@ -208,6 +211,7 @@ export default {
 					rb.pos += writeString(val, rb.dataview, rb.pos, lenMax, true, false);
 				},
 				len: 0,
+				lenAvailable: Math.max(0, lenMax - 1),
 			}),
 
 			/**
